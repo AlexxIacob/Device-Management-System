@@ -1,5 +1,7 @@
 ﻿using System;
-using namespace Models.User
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+namespace backend.Models;
 
 public class User
 {
