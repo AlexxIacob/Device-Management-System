@@ -16,7 +16,6 @@ public class DeviceServiceTests
         _service = new DeviceService(_mockRepository.Object);
     }
 
-    // ==================== GetAllDevicesAsync ====================
 
     [Fact]
     public async Task GetAllDevicesAsync_ShouldReturnAllDevices()
@@ -45,7 +44,6 @@ public class DeviceServiceTests
         Assert.Empty(result);
     }
 
-    // ==================== GetDeviceByIdAsync ====================
 
     [Fact]
     public async Task GetDeviceByIdAsync_ShouldReturnCorrectDevice()
@@ -80,7 +78,6 @@ public class DeviceServiceTests
         _mockRepository.Verify(r => r.GetByIdAsync("123"), Times.Once);
     }
 
-    // ==================== CreateDeviceAsync ====================
 
     [Fact]
     public async Task CreateDeviceAsync_ShouldCallRepository()
@@ -108,7 +105,6 @@ public class DeviceServiceTests
         Assert.Equal("Google", capturedDevice.Manufacturer);
     }
 
-    // ==================== UpdateDeviceAsync ====================
 
     [Fact]
     public async Task UpdateDeviceAsync_ShouldCallRepository()
@@ -137,7 +133,6 @@ public class DeviceServiceTests
         Assert.Equal("M4", capturedDevice.Processor);
     }
 
-    // ==================== DeleteDeviceAsync ====================
 
     [Fact]
     public async Task DeleteDeviceAsync_ShouldCallRepository()
