@@ -1,4 +1,21 @@
+using MongoDB.Driver;
+using Microsoft.Extensions.Options;
+using backend.Configuration;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<MongoDbSettings>(
+    builder.Configuration.GetSection("DeviceManagementDatabase"));
+
+builder.Services.AddSingleton<IMongoClient>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
+    return new MongoClient(settings.ConnectionString);
+});
+
+
 
 // Add services to the container.
 
