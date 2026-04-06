@@ -1,7 +1,7 @@
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
 using backend.Configuration;
-
+using backend.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +22,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
