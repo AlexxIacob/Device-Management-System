@@ -39,4 +39,10 @@ public class UserRepository : IUserRepository
         await _usersCollection.InsertOneAsync(user);
     }
 
+    public async Task UpdateAsync(string id, User user)
+    {
+        var filter = Builders<User>.Filter.Eq(u => u.Id, id);
+        await _usersCollection.ReplaceOneAsync(filter, user);
+    }
+
 }
