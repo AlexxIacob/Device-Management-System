@@ -1,6 +1,29 @@
 @backend_HostAddress = http://localhost:5190
 
-GET {{backend_HostAddress}}/weatherforecast/
+GET {{backend_HostAddress}}/devices
 Accept: application/json
 
 ###
+
+GET {{backend_HostAddress}}/devices/69d2f7e7c4f7a617d93682d4
+Accept: application/json
+
+###
+
+POST {{backend_HostAddress}}/devices/
+Content-Type: application/json
+{
+  "name": "iPhone 16",
+  "manufacturer": "Apple",
+  "type": "phone",
+  "os": "iOS",
+  "osVersion": "18.0",
+  "processor": "A18",
+  "ram": 8,
+  "description": "Test device",
+  "assignedUserId": null
+}
+
+###
+DELETE {{backend_HostAddress}}/devices/69d44fa1005e7925ccf74955
+Accept: application/json
