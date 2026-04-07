@@ -27,3 +27,12 @@ Content-Type: application/json
 ###
 DELETE {{backend_HostAddress}}/devices/69d44fa1005e7925ccf74955
 Accept: application/json
+
+
+###
+GET {{backend_HostAddress}}/user
+Accept: application/json
+
+
+###
+GET {{backend_HostAddress}}/user/69d2f7e7c4f7a617d93682d1
