@@ -1,9 +1,8 @@
-﻿using System;
+﻿using backend.Configuration;
 using backend.Models;
-using MongoDB.Driver;
-using Microsoft.Extensions.Options;
-using backend.Configuration;
 using backend.Repositories;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 public class DeviceRepository : IDeviceRepository
 {
@@ -42,4 +41,5 @@ public class DeviceRepository : IDeviceRepository
         var filter = Builders<Device>.Filter.Eq(d => d.Id, id);
         await _devicesCollection.DeleteOneAsync(filter);
     }
+
 }

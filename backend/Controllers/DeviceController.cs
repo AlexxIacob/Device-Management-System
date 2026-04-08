@@ -1,7 +1,8 @@
-﻿using backend.Models;
+﻿using backend.DTO;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace backend.Controllers;
 
@@ -34,19 +35,30 @@ public class DevicesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Device device)
+    public async Task<IActionResult> Create([FromBody] CreateDeviceDto dto)
     {
-        await _deviceService.CreateDeviceAsync(device);
-        return CreatedAtAction(nameof(GetById), new { id = device.Id }, device);
+        if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Manufacturer) ||
+            string.IsNullOrWhiteSpace(dto.Type) || string.IsNullOrWhiteSpace(dto.OS) ||
+            string.IsNullOrWhiteSpace(dto.OSVersion) || string.IsNullOrWhiteSpace(dto.Processor))
+            return BadRequest("All fields are required.");
+
+        await _deviceService.CreateDeviceAsync(dto);
+        return Ok("Device created successfully.");
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, Device device)
+    public async Task<IActionResult> Update(string id, [FromBody] CreateDeviceDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Manufacturer) ||
+            string.IsNullOrWhiteSpace(dto.Type) || string.IsNullOrWhiteSpace(dto.OS) ||
+            string.IsNullOrWhiteSpace(dto.OSVersion) || string.IsNullOrWhiteSpace(dto.Processor))
+            return BadRequest("All fields are required.");
+
         var existing = await _deviceService.GetDeviceByIdAsync(id);
         if (existing is null)
             return NotFound();
-        await _deviceService.UpdateDeviceAsync(id, device);
+
+        await _deviceService.UpdateDeviceAsync(id, dto);
         return NoContent();
     }
 
@@ -56,7 +68,36 @@ public class DevicesController : ControllerBase
         var existing = await _deviceService.GetDeviceByIdAsync(id);
         if (existing is null)
             return NotFound();
+
         await _deviceService.DeleteDeviceAsync(id);
         return NoContent();
+    }
+
+    [HttpPost("{id}/assign")]
+    public async Task<IActionResult> Assign(string id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId is null)
+            return Unauthorized();
+
+        var result = await _deviceService.AssignDeviceAsync(id, userId);
+        if (!result)
+            return BadRequest("Device not found or already assigned.");
+
+        return Ok("Device assigned successfully.");
+    }
+
+    [HttpPost("{id}/unassign")]
+    public async Task<IActionResult> Unassign(string id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId is null)
+            return Unauthorized();
+
+        var result = await _deviceService.UnassignDeviceAsync(id, userId);
+        if (!result)
+            return BadRequest("Device not found or not assigned to you.");
+
+        return Ok("Device unassigned successfully.");
     }
 }
