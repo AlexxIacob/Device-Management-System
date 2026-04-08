@@ -36,3 +36,13 @@ Accept: application/json
 
 ###
 GET {{backend_HostAddress}}/user/69d2f7e7c4f7a617d93682d1
+
+
+###
+GET {{backend_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "alexiacob01@yahoo.com",
+  "password": "parola_de_test"
+}
