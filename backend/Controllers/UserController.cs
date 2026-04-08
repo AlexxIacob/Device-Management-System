@@ -1,8 +1,9 @@
 ﻿namespace backend.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 
-
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase

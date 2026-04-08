@@ -39,10 +39,30 @@ GET {{backend_HostAddress}}/user/69d2f7e7c4f7a617d93682d1
 
 
 ###
-GET {{backend_HostAddress}}/auth/register
+POST {{backend_HostAddress}}/auth/register
 Content-Type: application/json
 
 {
   "email": "alexiacob01@yahoo.com",
-  "password": "parola_de_test"
+  "password": "1234567"
+}
+
+###
+
+POST {{backend_HostAddress}}/auth/login
+content-Type: application/json
+{
+  "email": "alexiacob01@yahoo.com",
+  "password": "1234567"
+}
+
+###
+PUT {{backend_HostAddress}}/auth/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY5ZDU5ZTA3YjQ3OGMyMGQ5MWU2NGZlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFsZXhpYWNvYjAxQHlhaG9vLmNvbSIsImV4cCI6MTc3NTY5Mzc1MSwiaXNzIjoiRGV2aWNlTWFuYWdlbWVudEFQSSIsImF1ZCI6IkRldmljZU1hbmFnZW1lbnRDbGllbnQifQ.LlojLhKyNQqyny41Rqaa4Mrv3Fyg107ivCuhfG8k0LA
+
+{
+  "name": "John Doe",
+  "role": "Developer",
+  "location": "Cluj-Napoca"
 }
