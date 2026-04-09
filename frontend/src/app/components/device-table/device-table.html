@@ -1,0 +1,45 @@
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Manufacturer</th>
+        <th>Type</th>
+        <th>OS</th>
+        <th>RAM</th>
+        <th>Assigned To</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let device of devices">
+        <td>{{ device.name }}</td>
+        <td>{{ device.manufacturer }}</td>
+        <td>{{ device.type }}</td>
+        <td>{{ device.os }}</td>
+        <td>{{ device.ram }} GB</td>
+        <td>{{ device.assignedUserName || 'Unassigned' }}</td>
+        <td class="actions">
+          <button class="btn-view" (click)="viewDevice.emit(device.id)">View</button>
+          <button class="btn-edit" (click)="editDevice.emit(device.id)">Edit</button>
+          <button class="btn-delete" (click)="deleteDevice.emit(device.id)">Delete</button>
+          <button
+            *ngIf="isFree(device)"
+            class="btn-assign"
+            (click)="assignDevice.emit(device.id)">
+            Assign
+          </button>
+          <button
+            *ngIf="isAssignedToCurrentUser(device)"
+            class="btn-unassign"
+            (click)="unassignDevice.emit(device.id)">
+            Unassign
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="devices.length === 0">
+        <td colspan="7" class="no-devices">No devices found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

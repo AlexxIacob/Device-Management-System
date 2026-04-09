@@ -1,0 +1,28 @@
+<div class="home-container">
+  <div class="home-header">
+    <h1>Devices</h1>
+    <button class="add-button" (click)="onAddDevice()">+ Add Device</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search by name, manufacturer, processor, RAM..."
+      (input)="onSearch(searchQuery)"
+    />
+    <button *ngIf="searchQuery" (click)="onSearch(''); searchQuery = ''">✕</button>
+  </div>
+
+  <app-device-table
+    [devices]="filteredDevices"
+    [currentUserId]="currentUserId"
+    (viewDevice)="onViewDevice($event)"
+    (editDevice)="onEditDevice($event)"
+    (deleteDevice)="onDeleteDevice($event)"
+    (assignDevice)="onAssignDevice($event)"
+    (unassignDevice)="onUnassignDevice($event)">
+  </app-device-table>
+</div>
