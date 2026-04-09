@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar';
-import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +13,15 @@ import { CommonModule } from '@angular/common';
 })
 export class App {
   title = 'frontend';
+  showNavbar = false;
 
-  constructor(private authService: AuthService) {}
+  private hiddenRoutes = ['/welcome', '/login', '/register', '/profile'];
 
-  isLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.showNavbar = !this.hiddenRoutes.includes(event.urlAfterRedirects);
+    });
   }
 }
