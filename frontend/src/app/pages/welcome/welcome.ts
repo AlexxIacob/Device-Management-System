@@ -1,9 +1,20 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
-  imports: [],
+  standalone: true,
   templateUrl: './welcome.html',
-  styleUrl: './welcome.css',
+  styleUrl: './welcome.css'
 })
-export class Welcome {}
+export class WelcomeComponent {
+  constructor(private router: Router) {}
+
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+  goToRegister(): void {
+    this.router.navigate(['/register']);
+  }
+}

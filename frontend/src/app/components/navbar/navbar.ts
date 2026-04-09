@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css'
 })
 export class NavbarComponent {
   constructor(private authService: AuthService, private router: Router) {}
