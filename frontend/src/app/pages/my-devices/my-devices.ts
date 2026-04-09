@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DeviceService } from '../../services/device.service';
@@ -6,16 +6,15 @@ import { AuthService } from '../../services/auth.service';
 import { Device } from '../../models/device.model';
 import { DeviceTableComponent } from '../../components/device-table/device-table';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-my-devices',
   standalone: true,
   imports: [CommonModule, DeviceTableComponent, FormsModule],
-  templateUrl: './home.html',
-  styleUrl: './home.css'
+  templateUrl: './my-devices.html',
+  styleUrl: './my-devices.css'
 })
-export class HomeComponent implements OnInit {
+export class MyDevicesComponent implements OnInit {
   devices: Device[] = [];
   filteredDevices: Device[] = [];
   currentUserId: string | null = null;
@@ -32,14 +31,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.currentUserId = this.authService.getUserId();
     this.loadDevices();
-    this.cdr.detectChanges();
   }
 
   loadDevices(): void {
     this.deviceService.getAll().subscribe({
       next: (devices) => {
-        this.devices = devices;
-        this.filteredDevices = devices;
+        this.devices = devices.filter(d => d.assignedUserId === this.currentUserId);
+        this.filteredDevices = this.devices;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Failed to load devices.';
@@ -62,46 +61,17 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  onAddDevice(): void {
-    this.router.navigate(['/devices/new']);
-  }
-
   onViewDevice(id: string): void {
-    this.router.navigate(['/devices', id]);
+    this.router.navigate(['/device-detail', id]);
   }
 
-  onEditDevice(id: string): void {
-    this.router.navigate(['/devices', id, 'edit']);
+  onUnassignDevice(id: string): void {
+    this.deviceService.unassign(id).subscribe({
+      next: () => {
+        this.loadDevices();
+        this.cdr.detectChanges();
+      },
+      error: () => this.errorMessage = 'Failed to unassign device.'
+    });
   }
-
-  onDeleteDevice(id: string): void {
-  if (!confirm('Are you sure you want to delete this device?')) return;
-  this.deviceService.delete(id).subscribe({
-    next: () => {
-      this.loadDevices();
-      this.cdr.detectChanges();
-    },
-    error: () => this.errorMessage = 'Failed to delete device.'
-  });
-}
-
-onAssignDevice(id: string): void {
-  this.deviceService.assign(id).subscribe({
-    next: () => {
-      this.loadDevices();
-      this.cdr.detectChanges();
-    },
-    error: () => this.errorMessage = 'Failed to assign device.'
-  });
-}
-
-onUnassignDevice(id: string): void {
-  this.deviceService.unassign(id).subscribe({
-    next: () => {
-      this.loadDevices();
-      this.cdr.detectChanges();
-    },
-    error: () => this.errorMessage = 'Failed to unassign device.'
-  });
-}
 }

@@ -1,0 +1,32 @@
+<div class="my-devices-container">
+  <div class="my-devices-header">
+    <h1>My Devices</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Search by name, manufacturer, processor, RAM..."
+      (input)="onSearch(searchQuery)"
+    />
+    <button *ngIf="searchQuery" (click)="onSearch(''); searchQuery = ''">✕</button>
+  </div>
+
+  <div *ngIf="filteredDevices.length === 0" class="no-devices">
+    You have no devices assigned to you.
+  </div>
+
+  <app-device-table
+    *ngIf="filteredDevices.length > 0"
+    [devices]="filteredDevices"
+    [currentUserId]="currentUserId"
+    [showEdit]="false"
+    [showDelete]="false"
+    [showAssign]="false"
+    (viewDevice)="onViewDevice($event)"
+    (unassignDevice)="onUnassignDevice($event)">
+  </app-device-table>
+</div>

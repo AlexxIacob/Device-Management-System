@@ -12,7 +12,9 @@ import { Device } from '../../models/device.model';
 export class DeviceTableComponent {
   @Input() devices: Device[] = [];
   @Input() currentUserId: string | null = null;
-
+  @Input() showEdit = true;
+  @Input() showDelete = true;
+  @Input() showAssign = true;
   @Output() viewDevice = new EventEmitter<string>();
   @Output() editDevice = new EventEmitter<string>();
   @Output() deleteDevice = new EventEmitter<string>();
