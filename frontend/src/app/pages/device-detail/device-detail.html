@@ -1,0 +1,59 @@
+<div class="detail-container">
+  <div class="detail-card" *ngIf="device">
+    <div class="detail-header">
+      <h2>{{ device.name }}</h2>
+      <div class="detail-actions">
+        <button class="btn-back" (click)="onBack()">← Back</button>
+        <button
+          *ngIf="isFree()"
+          class="btn-assign"
+          (click)="onAssign()">
+          Assign to me
+        </button>
+        <button
+          *ngIf="isAssignedToCurrentUser()"
+          class="btn-unassign"
+          (click)="onUnassign()">
+          Unassign
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-item">
+        <span class="label">Manufacturer</span>
+        <span class="value">{{ device.manufacturer }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Type</span>
+        <span class="value">{{ device.type }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">OS</span>
+        <span class="value">{{ device.os }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">OS Version</span>
+        <span class="value">{{ device.osVersion }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Processor</span>
+        <span class="value">{{ device.processor }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">RAM</span>
+        <span class="value">{{ device.ram }} GB</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Assigned To</span>
+        <span class="value">{{ device.assignedUserName || 'Unassigned' }}</span>
+      </div>
+      <div class="detail-item full-width">
+        <span class="label">Description</span>
+        <span class="value">{{ device.description || 'No description.' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+</div>
