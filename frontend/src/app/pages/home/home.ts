@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DeviceService } from '../../services/device.service';
@@ -6,12 +6,12 @@ import { AuthService } from '../../services/auth.service';
 import { Device } from '../../models/device.model';
 import { DeviceTableComponent } from '../../components/device-table/device-table';
 import { FormsModule } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
+import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, DeviceTableComponent, FormsModule],
+  imports: [CommonModule, DeviceTableComponent, FormsModule, ConfirmationDialogComponent],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
   currentUserId: string | null = null;
   errorMessage = '';
   searchQuery = '';
+  showDeleteDialog = false;
+  deviceToDelete: string | null = null;
 
   constructor(
     private deviceService: DeviceService,
@@ -30,22 +32,22 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.currentUserId = this.authService.getUserId();
-  this.loadDevices();
-}
+    this.currentUserId = this.authService.getUserId();
+    this.loadDevices();
+  }
 
-loadDevices(): void {
-  this.deviceService.getAll().subscribe({
-    next: (devices) => {
-      this.devices = [...devices];
-      this.filteredDevices = [...devices];
-      this.cdr.detectChanges();
-    },
-    error: () => {
-      this.errorMessage = 'Failed to load devices.';
-    }
-  });
-}
+  loadDevices(): void {
+    this.deviceService.getAll().subscribe({
+      next: (devices) => {
+        this.devices = [...devices];
+        this.filteredDevices = [...devices];
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load devices.';
+      }
+    });
+  }
 
   onSearch(query: string): void {
     this.searchQuery = query;
@@ -75,33 +77,45 @@ loadDevices(): void {
   }
 
   onDeleteDevice(id: string): void {
-  if (!confirm('Are you sure you want to delete this device?')) return;
-  this.deviceService.delete(id).subscribe({
-    next: () => {
-      this.loadDevices();
-      this.cdr.detectChanges();
-    },
-    error: () => this.errorMessage = 'Failed to delete device.'
-  });
-}
+    this.deviceToDelete = id;
+    this.showDeleteDialog = true;
+  }
 
-onAssignDevice(id: string): void {
-  this.deviceService.assign(id).subscribe({
-    next: () => {
-      this.loadDevices();
-      this.cdr.detectChanges();
-    },
-    error: () => this.errorMessage = 'Failed to assign device.'
-  });
-}
+  onConfirmDelete(): void {
+    if (!this.deviceToDelete) return;
+    this.deviceService.delete(this.deviceToDelete).subscribe({
+      next: () => {
+        this.loadDevices();
+        this.cdr.detectChanges();
+      },
+      error: () => this.errorMessage = 'Failed to delete device.'
+    });
+    this.showDeleteDialog = false;
+    this.deviceToDelete = null;
+  }
 
-onUnassignDevice(id: string): void {
-  this.deviceService.unassign(id).subscribe({
-    next: () => {
-      this.loadDevices();
-      this.cdr.detectChanges();
-    },
-    error: () => this.errorMessage = 'Failed to unassign device.'
-  });
-}
+  onCancelDelete(): void {
+    this.showDeleteDialog = false;
+    this.deviceToDelete = null;
+  }
+
+  onAssignDevice(id: string): void {
+    this.deviceService.assign(id).subscribe({
+      next: () => {
+        this.loadDevices();
+        this.cdr.detectChanges();
+      },
+      error: () => this.errorMessage = 'Failed to assign device.'
+    });
+  }
+
+  onUnassignDevice(id: string): void {
+    this.deviceService.unassign(id).subscribe({
+      next: () => {
+        this.loadDevices();
+        this.cdr.detectChanges();
+      },
+      error: () => this.errorMessage = 'Failed to unassign device.'
+    });
+  }
 }

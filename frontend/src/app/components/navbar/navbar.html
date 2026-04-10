@@ -2,11 +2,20 @@
   <div class="navbar-brand">
     <a routerLink="/home">Device Manager</a>
   </div>
-
   <div class="navbar-links">
     <a routerLink="/home">Home</a>
     <a routerLink="/devices">My Devices</a>
     <a routerLink="/my-profile">Profile</a>
-    <button (click)="logout()">Logout</button>
+    <button (click)="onLogoutClick()">Logout</button>
   </div>
 </nav>
+
+<app-confirmation-dialog
+  [isVisible]="showLogoutDialog"
+  title="Logout"
+  message="Are you sure you want to logout?"
+  confirmText="Logout"
+  cancelText="Cancel"
+  (confirmed)="onConfirmLogout()"
+  (cancelled)="onCancelLogout()">
+</app-confirmation-dialog>

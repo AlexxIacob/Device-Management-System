@@ -26,3 +26,13 @@
     (unassignDevice)="onUnassignDevice($event)">
   </app-device-table>
 </div>
+
+<app-confirmation-dialog
+  [isVisible]="showDeleteDialog"
+  title="Delete Device"
+  message="Are you sure you want to delete this device? This action cannot be undone."
+  confirmText="Delete"
+  cancelText="Cancel"
+  (confirmed)="onConfirmDelete()"
+  (cancelled)="onCancelDelete()">
+</app-confirmation-dialog>
