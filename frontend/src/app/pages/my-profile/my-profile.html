@@ -1,0 +1,30 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <h2>My Profile</h2>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [value]="email" disabled />
+    </div>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" [(ngModel)]="name" placeholder="Enter your name" />
+    </div>
+
+    <div class="form-group">
+      <label>Role</label>
+      <input type="text" [(ngModel)]="role" placeholder="Enter your role" />
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" [(ngModel)]="location" placeholder="Enter your location" />
+    </div>
+
+    <button (click)="saveProfile()">Save Changes</button>
+  </div>
+</div>
