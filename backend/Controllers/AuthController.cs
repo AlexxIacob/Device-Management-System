@@ -52,7 +52,7 @@ public class AuthController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("create_profile")]
+    [HttpPut("update_profile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO dto)
     {
         if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Role) || string.IsNullOrWhiteSpace(dto.Location))
@@ -71,7 +71,7 @@ public class AuthController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("update_profile")]
+    [HttpGet("get_profile")]
     public async Task<IActionResult> GetProfile()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
