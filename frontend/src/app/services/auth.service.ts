@@ -30,9 +30,12 @@ export class AuthService {
   }
 
   updateProfile(data: UpdateProfile): Observable<any> {
-    return this.http.put(`${this.apiUrl}/profile`, data);
-  }
+  return this.http.put(`${this.apiUrl}/update_profile`, data, { responseType: 'text' });
+}
 
+  getProfile(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/get_profile`);
+  }
   getToken(): string | null {
     return localStorage.getItem('token');
   }
