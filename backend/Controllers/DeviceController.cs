@@ -42,8 +42,15 @@ public class DevicesController : ControllerBase
             string.IsNullOrWhiteSpace(dto.OSVersion) || string.IsNullOrWhiteSpace(dto.Processor))
             return BadRequest("All fields are required.");
 
-        await _deviceService.CreateDeviceAsync(dto);
-        return Ok("Device created successfully.");
+        try
+        {
+            await _deviceService.CreateDeviceAsync(dto);
+            return Ok("Device created successfully.");
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(ex.Message);
+        }
     }
 
     [HttpPut("{id}")]

@@ -10,4 +10,6 @@ public interface IDeviceRepository
     Task CreateAsync(Device device);
     Task UpdateAsync(string id, Device device);
     Task DeleteAsync(string id);
+
+    Task<Device?> GetByNameAsync(string name);
 }

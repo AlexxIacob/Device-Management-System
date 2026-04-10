@@ -40,6 +40,10 @@ public class DeviceService : IDeviceService
 
     public async Task CreateDeviceAsync(CreateDeviceDto dto)
     {
+        var existing = await _deviceRepository.GetByNameAsync(dto.Name);
+        if (existing is not null)
+            throw new InvalidOperationException("Device already exists.");
+
         var device = new Device
         {
             Name = dto.Name,

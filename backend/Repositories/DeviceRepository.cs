@@ -42,4 +42,10 @@ public class DeviceRepository : IDeviceRepository
         await _devicesCollection.DeleteOneAsync(filter);
     }
 
+    public async Task<Device?> GetByNameAsync(string name)
+    {
+        var filter = Builders<Device>.Filter.Eq(d => d.Name, name);
+        return await _devicesCollection.Find(filter).FirstOrDefaultAsync();
+    }
+
 }
