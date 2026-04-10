@@ -6,11 +6,6 @@
     <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
     <div class="form-group">
-      <label>Email</label>
-      <input type="email" [value]="email" disabled />
-    </div>
-
-    <div class="form-group">
       <label>Name</label>
       <input type="text" [(ngModel)]="name" placeholder="Enter your name" />
     </div>

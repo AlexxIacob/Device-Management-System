@@ -62,7 +62,7 @@ export class MyDevicesComponent implements OnInit {
   }
 
   onViewDevice(id: string): void {
-    this.router.navigate(['/device-detail', id]);
+    this.router.navigate(['/devices', id]);
   }
 
   onUnassignDevice(id: string): void {

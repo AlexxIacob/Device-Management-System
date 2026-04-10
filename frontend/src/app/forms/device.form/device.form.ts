@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceService } from '../../services/device.service';
@@ -17,7 +17,6 @@ export class DeviceFormComponent implements OnInit {
   deviceId: string | null = null;
   errorMessage = '';
   successMessage = '';
-
   device: CreateDevice = {
     name: '',
     manufacturer: '',
@@ -32,7 +31,8 @@ export class DeviceFormComponent implements OnInit {
   constructor(
     private deviceService: DeviceService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -52,9 +52,11 @@ export class DeviceFormComponent implements OnInit {
             ram: device.ram,
             description: device.description
           };
+          this.cdr.detectChanges();
         },
         error: () => {
           this.errorMessage = 'Failed to load device.';
+          this.cdr.detectChanges();
         }
       });
     }
@@ -84,11 +86,16 @@ export class DeviceFormComponent implements OnInit {
       this.deviceService.create(this.device).subscribe({
         next: () => {
           this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          this.errorMessage = err?.error || 'Failed to create device.';
-        }
-      });
+      },
+      error: (err) => {
+        if (err.status === 409) {
+          this.errorMessage = 'A device with this name already exists.';
+          } else {
+          this.errorMessage = 'Failed to create device.';
+    }
+  }
+});
+    
     }
   }
 
