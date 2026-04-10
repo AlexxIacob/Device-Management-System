@@ -30,22 +30,22 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUserId = this.authService.getUserId();
-    this.loadDevices();
-    this.cdr.detectChanges();
-  }
+  this.currentUserId = this.authService.getUserId();
+  this.loadDevices();
+}
 
-  loadDevices(): void {
-    this.deviceService.getAll().subscribe({
-      next: (devices) => {
-        this.devices = devices;
-        this.filteredDevices = devices;
-      },
-      error: () => {
-        this.errorMessage = 'Failed to load devices.';
-      }
-    });
-  }
+loadDevices(): void {
+  this.deviceService.getAll().subscribe({
+    next: (devices) => {
+      this.devices = devices;
+      this.filteredDevices = [...devices];
+      this.cdr.detectChanges();
+    },
+    error: () => {
+      this.errorMessage = 'Failed to load devices.';
+    }
+  });
+}
 
   onSearch(query: string): void {
     this.searchQuery = query;
