@@ -115,4 +115,9 @@ public class AuthService : IAuthService
             return false;
         }
     }
+
+    public async Task<User?> GetProfileAsync(string userId)
+    {
+        return await _userRepository.GetByIdAsync(userId);
+    }
 }

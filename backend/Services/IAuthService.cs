@@ -1,6 +1,8 @@
 ﻿namespace backend.Services;
 
 using backend.DTO;
+using backend.Models;
+
 public interface IAuthService
 {
 
@@ -10,6 +12,7 @@ public interface IAuthService
 
     Task<bool> UpdateProfileAsync(string userId, UpdateProfileDTO dto);
 
+    Task<User?> GetProfileAsync(string userId);
 
 
 }
