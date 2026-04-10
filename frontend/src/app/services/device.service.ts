@@ -21,12 +21,12 @@ export class DeviceService {
   }
 
   create(device: CreateDevice): Observable<any> {
-    return this.http.post(this.apiUrl, device);
-  }
+  return this.http.post(this.apiUrl, device, { responseType: 'text' });
+}
 
   update(id: string, device: CreateDevice): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, device);
-  }
+  return this.http.put(`${this.apiUrl}/${id}`, device, { responseType: 'text' });
+}
 
   delete(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
