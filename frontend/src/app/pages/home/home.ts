@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
 loadDevices(): void {
   this.deviceService.getAll().subscribe({
     next: (devices) => {
-      this.devices = devices;
+      this.devices = [...devices];
       this.filteredDevices = [...devices];
       this.cdr.detectChanges();
     },
