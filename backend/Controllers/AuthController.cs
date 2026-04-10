@@ -52,7 +52,7 @@ public class AuthController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("profile")]
+    [HttpPut("create_profile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO dto)
     {
         if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Role) || string.IsNullOrWhiteSpace(dto.Location))
@@ -69,4 +69,21 @@ public class AuthController : ControllerBase
 
         return Ok("Profile updated successfully.");
     }
+
+    [Authorize]
+    [HttpGet("update_profile")]
+    public async Task<IActionResult> GetProfile()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId is null)
+            return Unauthorized();
+
+        var user = await _authService.GetProfileAsync(userId);
+        if (user is null)
+            return NotFound();
+
+        return Ok(user);
+    }
+
+
 }
