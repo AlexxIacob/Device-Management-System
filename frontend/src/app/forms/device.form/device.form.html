@@ -1,0 +1,20 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>{{ isEditMode ? 'Edit Device' : 'Add Device' }}</h2>
+
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+    <app-device-form-fields
+      [device]="device"
+      (deviceChange)="onDeviceChange($event)">
+    </app-device-form-fields>
+
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button class="btn-submit" (click)="onSubmit()">
+        {{ isEditMode ? 'Update Device' : 'Add Device' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -10,4 +10,6 @@ export const routes: Routes = [
   { path: 'home', loadComponent: () => import('./pages/home/home').then(m => m.HomeComponent), canActivate: [authGuard] },
   { path: 'devices', loadComponent: () => import('./pages/my-devices/my-devices').then(m => m.MyDevicesComponent), canActivate: [authGuard] },
   { path: 'my-profile', loadComponent: () => import('./pages/my-profile/my-profile').then(m => m.MyProfileComponent), canActivate: [authGuard] },
+  { path: 'devices/new', loadComponent: () => import('./forms/device.form/device.form').then(m => m.DeviceFormComponent), canActivate: [authGuard] },
+  { path: 'devices/:id/edit', loadComponent: () => import('./forms/device.form/device.form').then(m => m.DeviceFormComponent), canActivate: [authGuard] },
 ];

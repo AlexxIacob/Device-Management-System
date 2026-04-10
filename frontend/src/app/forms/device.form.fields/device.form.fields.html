@@ -1,0 +1,45 @@
+<div class="form-fields">
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="device.name" (ngModelChange)="onFieldChange()" placeholder="Device name" />
+  </div>
+
+  <div class="form-group">
+    <label>Manufacturer</label>
+    <input type="text" [(ngModel)]="device.manufacturer" (ngModelChange)="onFieldChange()" placeholder="Manufacturer" />
+  </div>
+
+  <div class="form-group">
+    <label>Type</label>
+    <select [(ngModel)]="device.type" (ngModelChange)="onFieldChange()">
+      <option value="">Select type</option>
+      <option value="phone">Phone</option>
+      <option value="tablet">Tablet</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>OS</label>
+    <input type="text" [(ngModel)]="device.os" (ngModelChange)="onFieldChange()" placeholder="Operating System" />
+  </div>
+
+  <div class="form-group">
+    <label>OS Version</label>
+    <input type="text" [(ngModel)]="device.osVersion" (ngModelChange)="onFieldChange()" placeholder="OS Version" />
+  </div>
+
+  <div class="form-group">
+    <label>Processor</label>
+    <input type="text" [(ngModel)]="device.processor" (ngModelChange)="onFieldChange()" placeholder="Processor" />
+  </div>
+
+  <div class="form-group">
+    <label>RAM (GB)</label>
+    <input type="number" [(ngModel)]="device.ram" (ngModelChange)="onFieldChange()" placeholder="RAM in GB" min="1" />
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <textarea [(ngModel)]="device.description" (ngModelChange)="onFieldChange()" placeholder="Device description" rows="3"></textarea>
+  </div>
+</div>
