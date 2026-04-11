@@ -41,7 +41,11 @@ export class DeviceService {
   }
 
   chat(message: string): Observable<any> {
-  return this.http.post(`${this.apiUrl}/chat`, { message });
-}
+    return this.http.post(`${this.apiUrl}/chat`, { message });
+  }
+
+  search(query: string): Observable<Device[]> {
+    return this.http.get<Device[]>(`${this.apiUrl}/search?q=${encodeURIComponent(query)}`);
+  } 
 
 }

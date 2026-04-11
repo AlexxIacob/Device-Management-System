@@ -53,17 +53,20 @@ export class HomeComponent implements OnInit {
   onSearch(query: string): void {
     this.searchQuery = query;
     if (!query.trim()) {
-      this.filteredDevices = this.devices;
-      return;
+      this.filteredDevices = [...this.devices];
+        return;
     }
-    const q = query.toLowerCase();
-    this.filteredDevices = this.devices.filter(d =>
-      d.name.toLowerCase().includes(q) ||
-      d.manufacturer.toLowerCase().includes(q) ||
-      d.processor.toLowerCase().includes(q) ||
-      d.ram.toString().includes(q)
-    );
-  }
+
+      this.deviceService.search(query).subscribe({
+        next: (devices) => {
+          this.filteredDevices = devices;
+          this.cdr.detectChanges();
+      },
+        error: () => {
+          this.errorMessage = 'Search failed.';
+    }
+  });
+}
 
   onAddDevice(): void {
     this.router.navigate(['/devices/new']);
