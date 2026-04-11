@@ -118,4 +118,14 @@ public class DevicesController : ControllerBase
         return Ok(new { reply });
     }
 
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string q, [FromServices] ISearchService searchService)
+    {
+        if (string.IsNullOrWhiteSpace(q))
+            return BadRequest("Query cannot be empty.");
+
+        var results = await searchService.SearchDevicesAsync(q);
+        return Ok(results);
+    }
+
 }
