@@ -107,4 +107,15 @@ public class DevicesController : ControllerBase
 
         return Ok("Device unassigned successfully.");
     }
+
+    [HttpPost("chat")]
+    public async Task<IActionResult> Chat([FromBody] ChatDto dto, [FromServices] IAIService aiService)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Message))
+            return BadRequest("Message is required.");
+
+        var reply = await aiService.ChatAsync(dto.Message);
+        return Ok(new { reply });
+    }
+
 }
