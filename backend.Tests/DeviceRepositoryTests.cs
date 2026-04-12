@@ -96,4 +96,35 @@ public class DeviceRepositoryTests : IDisposable
         var result = await _collection.Find(d => d.Id == device.Id).FirstOrDefaultAsync();
         Assert.Null(result);
     }
+
+    [Fact]
+    public async Task GetByNameAsync_ShouldReturnCorrectDevice()
+    {
+        var device = new Device { Name = "iPhone 15", Manufacturer = "Apple", Type = "phone", OS = "iOS", OSVersion = "17.0", Processor = "A17", RAM = 8, Description = "Test" };
+        await _collection.InsertOneAsync(device);
+
+        var result = await _repository.GetByNameAsync("iPhone 15");
+
+        Assert.NotNull(result);
+        Assert.Equal("iPhone 15", result.Name);
+    }
+
+    [Fact]
+    public async Task GetByNameAsync_ShouldReturnNull_WhenNameNotFound()
+    {
+        var result = await _repository.GetByNameAsync("NonExistent Device");
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task GetByNameAsync_ShouldBeCaseSensitive()
+    {
+        var device = new Device { Name = "iPhone 15", Manufacturer = "Apple", Type = "phone", OS = "iOS", OSVersion = "17.0", Processor = "A17", RAM = 8, Description = "Test" };
+        await _collection.InsertOneAsync(device);
+
+        var result = await _repository.GetByNameAsync("iphone 15");
+
+        Assert.Null(result);
+    }
 }
