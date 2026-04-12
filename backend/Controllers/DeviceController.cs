@@ -18,6 +18,7 @@ public class DevicesController : ControllerBase
         _deviceService = deviceService;
     }
 
+    /// <summary>Get all devices</summary>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -25,6 +26,8 @@ public class DevicesController : ControllerBase
         return Ok(devices);
     }
 
+
+    /// <summary>Get device by ID</summary>
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
@@ -34,6 +37,7 @@ public class DevicesController : ControllerBase
         return Ok(device);
     }
 
+    /// <summary>Create a new device</summary>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateDeviceDto dto)
     {
@@ -53,6 +57,7 @@ public class DevicesController : ControllerBase
         }
     }
 
+    /// <summary>Update an existing device</summary>
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, [FromBody] CreateDeviceDto dto)
     {
@@ -69,6 +74,7 @@ public class DevicesController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>Delete a device</summary>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
@@ -80,6 +86,7 @@ public class DevicesController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>Assign device to current user</summary>
     [HttpPost("{id}/assign")]
     public async Task<IActionResult> Assign(string id)
     {
@@ -94,6 +101,7 @@ public class DevicesController : ControllerBase
         return Ok("Device assigned successfully.");
     }
 
+    /// <summary>Unassign device from current user</summary>
     [HttpPost("{id}/unassign")]
     public async Task<IActionResult> Unassign(string id)
     {
@@ -108,6 +116,7 @@ public class DevicesController : ControllerBase
         return Ok("Device unassigned successfully.");
     }
 
+    /// <summary>Chat with AI assistant about devices</summary>
     [HttpPost("chat")]
     public async Task<IActionResult> Chat([FromBody] ChatDto dto, [FromServices] IAIService aiService)
     {
@@ -118,6 +127,7 @@ public class DevicesController : ControllerBase
         return Ok(new { reply });
     }
 
+    /// <summary>Search devices by free text query</summary>
     [HttpGet("search")]
     public async Task<IActionResult> Search([FromQuery] string q, [FromServices] ISearchService searchService)
     {

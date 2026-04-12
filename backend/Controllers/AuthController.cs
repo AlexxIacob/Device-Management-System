@@ -1,4 +1,4 @@
-﻿using backend.DTO;
+﻿    using backend.DTO;
 using backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +17,7 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    ///<summary>Register a new user</summary>
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] AuthDTO dto)
     {
@@ -31,6 +32,7 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>Login and get JWT token</summary>
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] AuthDTO dto)
     {
@@ -45,12 +47,14 @@ public class AuthController : ControllerBase
         return Ok(new { token });
     }
 
+    /// <summary>Sign out</summary>
     [HttpPost("signout")]
     public IActionResult LogOut()
     {
         return Ok("Signed out successfully.");
     }
 
+    /// <summary>Update user profile</summary>
     [Authorize]
     [HttpPut("update_profile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO dto)
@@ -70,6 +74,7 @@ public class AuthController : ControllerBase
         return Ok("Profile updated successfully.");
     }
 
+    /// <summary>Get current user profile</summary>
     [Authorize]
     [HttpGet("get_profile")]
     public async Task<IActionResult> GetProfile()

@@ -15,6 +15,7 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
+    /// <summary>Get all users</summary>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -22,6 +23,7 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    /// <summary>Get user by ID</summary>
     [HttpGet("{id}")]   
     public async Task<IActionResult> GetById(string id)
     {
