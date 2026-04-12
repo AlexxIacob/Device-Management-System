@@ -1,12 +1,25 @@
 @backend_HostAddress = http://localhost:5190
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY5ZGJkYTdkZDA2YzQxY2IyNjM2ODJkMSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFsZXhhbmRydWlhY29iMDFAZ21haWwuY29tIiwiZXhwIjoxNzc2MTA1MTI4LCJpc3MiOiJEZXZpY2VNYW5hZ2VtZW50QVBJIiwiYXVkIjoiRGV2aWNlTWFuYWdlbWVudENsaWVudCJ9.ReZuUBoE6Ek7Gy2rJrfof_2w2bHG3rcDVE7j467Wowk
+
+
+POST {{backend_HostAddress}}/auth/login
+content-Type: application/json
+{
+  "email": "alexandruiacob01@gmail.com",
+  "password": "12345678"
+}
+
+###
+
 
 GET {{backend_HostAddress}}/devices
 Accept: application/json
-
+Authorization: Bearer {{token}}
 ###
 
 GET {{backend_HostAddress}}/devices/69d2f7e7c4f7a617d93682d4
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ###
 
@@ -52,14 +65,14 @@ Content-Type: application/json
 POST {{backend_HostAddress}}/auth/login
 content-Type: application/json
 {
-  "email": "alexiacob01@yahoo.com",
-  "password": "1234567"
+  "email": "alexandruiacob01@gmail.com",
+  "password": "12345678"
 }
 
 ###
 PUT {{backend_HostAddress}}/auth/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY5ZDU5ZTA3YjQ3OGMyMGQ5MWU2NGZlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFsZXhpYWNvYjAxQHlhaG9vLmNvbSIsImV4cCI6MTc3NTY5Mzc1MSwiaXNzIjoiRGV2aWNlTWFuYWdlbWVudEFQSSIsImF1ZCI6IkRldmljZU1hbmFnZW1lbnRDbGllbnQifQ.LlojLhKyNQqyny41Rqaa4Mrv3Fyg107ivCuhfG8k0LA
+Authorization: Bearer {{token}}
 
 {
   "name": "John Doe",
@@ -70,4 +83,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 ###
 POST {{backend_HostAddress}}/devices/69d2f7e7c4f7a617d93682d4/assign
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY5ZDU5ZTA3YjQ3OGMyMGQ5MWU2NGZlMiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFsZXhpYWNvYjAxQHlhaG9vLmNvbSIsImV4cCI6MTc3NTY5NTIyMCwiaXNzIjoiRGV2aWNlTWFuYWdlbWVudEFQSSIsImF1ZCI6IkRldmljZU1hbmFnZW1lbnRDbGllbnQifQ.P_ojSOgjyMTd2obF6BrCZt53QtXvbPvwipLvV9o0KMY
+Authorization: Bearer {{token}}
