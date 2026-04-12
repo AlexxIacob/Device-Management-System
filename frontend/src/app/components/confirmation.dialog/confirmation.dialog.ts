@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-confirmation-dialog',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './confirmation-dialog.html',
-  styleUrl: './confirmation-dialog.css'
+  templateUrl: './confirmation.dialog.html',
+  styleUrl: './confirmation.dialog.css'
 })
 export class ConfirmationDialogComponent {
   @Input() title = 'Are you sure?';

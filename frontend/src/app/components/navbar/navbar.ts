@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog';
+import { ConfirmationDialogComponent } from '../confirmation.dialog/confirmation.dialog';
 
 @Component({
   selector: 'app-navbar',

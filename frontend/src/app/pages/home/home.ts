@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { Device } from '../../models/device.model';
 import { DeviceTableComponent } from '../../components/device-table/device-table';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationDialogComponent } from '../../components/confirmation-dialog/confirmation-dialog';
+import { ConfirmationDialogComponent } from '../../components/confirmation.dialog/confirmation.dialog';
 import { ChatComponent } from '../../components/chat/chat';
 
 @Component({
